@@ -214,3 +214,101 @@ export default {
     }
 }
 ```
+
+## 14) Reuse Component
+```
+<ul>
+    <li v-for="item in users" :key="item">
+        <UserPage :item="item" :getClickData="getClickData" />
+    </li>
+</ul>
+
+```
+
+## 15) HTML Binding
+```
+<div v-html="tag1 + tag2"></div>
+
+...
+
+export default {    
+    name: "HomeComponent",
+    data() {
+        return {
+            tag1: '<h2>Tag 1</h2>',
+            tag2: '<h2>Tag 2</h2>',
+        }
+    },
+}
+
+```
+
+## 16) CSS Class Binding
+```
+<h3 class="otherClass1" :class="{ green:bgColor, yellow:true }">Ravi Patel</h3>
+<h3 class="otherClass2" :class="applyStyle">Ravi Patel</h3>
+<button v-on:click="bgColor=!bgColor">Toggle BG</button>
+
+...
+
+export default {
+    name: "HomePage",
+    data() {
+        return {
+            bgColor:true,
+        }
+    },
+    computed: {
+        applyStyle() {
+            return {
+                green: this.bgColor,
+                red: true,
+            }
+        }
+    }
+}
+
+```
+
+## 17) Send data from child to parent data component
+- Parent Component:
+```
+<h3>Name : {{ childName }}</h3>
+<Child2 :parentFunction2="parentFunction2" />
+
+...
+
+export default {
+    name: 'ChildPage',
+    data() {
+        return {
+            childName: '',
+        }
+    },
+    methods: {
+        parentFunction2(childName) {
+            this.childName = childName;
+        }
+    }
+}
+
+```
+
+- Child Component:
+```
+<button v-on:click="parentFunction2(childName)">Call Parent Function 2</button>  
+
+...
+
+export default {
+    name: 'ChildPage',
+    data() {
+        return {
+            childName: 'Test 1',
+        }
+    },
+    props: {
+        parentFunction2: Function
+    }
+}
+```

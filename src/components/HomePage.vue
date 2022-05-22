@@ -86,11 +86,37 @@
 <hr>
 <h2>Pass Data Parent to Child Component</h2>
 <ChildPage title="Test String" :fruit="fruit" :parentFunction="parentFunction" />
+
+<hr>
+<h2>Reuse Component</h2>
+<ul>
+    <li v-for="item in users" :key="item">
+        <UserPage :item="item" :getClickData="getClickData" />
+    </li>
+</ul>
+
+<hr>
+<h2>HTML Binding</h2>
+<div v-html="tag1 + tag2"></div>
+
+<hr>
+<h2>CSS Class Binding</h2>
+<h3 class="otherClass1" :class="{ green:bgColor, yellow:true }">Ravi Patel</h3>
+<h3 class="otherClass2" :class="applyStyle">Ravi Patel</h3>
+<button v-on:click="bgColor=!bgColor">Toggle BG</button>
+
+<hr>
+<h2>Send data from Child to Parent Component</h2>
+<h3>Name : {{ childName }}</h3>
+<Child2 :parentFunction2="parentFunction2" />
+
 <hr>
 </template>
 
 <script>
 import ChildPage from "./ChildPage.vue";
+import UserPage from "./UserPage.vue";
+import Child2 from "./Child2.vue";
 export default {
     name: "HomePage",
     data() {
@@ -103,12 +129,16 @@ export default {
             technology: [],
             profession: null,
             show: true,
+            bgColor:true,
+            childName: '',
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
                 { name: "User 2", email: "user2@test.com" },
                 { name: "User 3", email: "user3@test.com" },
             ],
+            tag1: '<h2>Tag 1</h2>',
+            tag2: '<h2>Tag 2</h2>',
             getValue: function (val = "") {
                 return val + " Test";
             }
@@ -138,9 +168,20 @@ export default {
         },
         parentFunction() {
             alert("Parent function called.");
+        },
+        parentFunction2(childName) {
+            this.childName = childName;
         }
     },
-    components: { ChildPage }
+    components: { ChildPage, UserPage, Child2 },
+    computed: {
+        applyStyle() {
+            return {
+                green: this.bgColor,
+                red: true,
+            }
+        }
+    }
 }
 </script>
 
@@ -150,6 +191,15 @@ h1 {
 }
 
 h2 {
+    color: crimson;
+}
+.green {
+    background-color: lightgreen;
+}
+.yellow {
+    color: yellow;
+}
+.red {
     color: crimson;
 }
 </style>
