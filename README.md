@@ -312,3 +312,84 @@ export default {
     }
 }
 ```
+## 18) Routing
+- Install route package
+```
+npm install vue-router@next
+```
+
+- Create routes.js file (can be put in src folder) and add following code
+```
+import {createWebHashHistory,createRouter} from 'vue-router'; //must have
+import Home from './components/Home.vue';
+
+const routes = [
+    {
+        name: 'Home',
+        path: '/',
+        component: Home
+    }
+];
+
+const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+});
+
+export default router;
+```
+
+- In main.js file, integrate router and update code as below
+```
+import router from './routes'
+
+createApp(App).use(router).mount('#app')
+```
+
+## 19) Dynamic Routing
+- In routes.js
+```
+const routes = [
+    {
+        name: 'Home',
+        path: '/',
+        component: Home
+    },
+    {
+        name: 'AboutPage',
+        path: '/about-us',
+        component: AboutPage
+    },
+    {
+        name: 'ProfilePage',
+        path: '/profile/:name',
+        component: ProfilePage
+    },
+];
+```
+
+- In ProfilePage.vue, to get param data, need to import useRoute and use as below
+```
+<script>
+import { useRoute } from 'vue-router'
+
+export default {
+    name: 'ProfilePage',
+    data(){
+        return {
+            profile_name: '',
+        }
+    },
+    mounted() {
+        const route = useRoute();
+        this.profile_name = route.params.name;
+    },
+}
+</script>
+```
+
+## 20) Page Not Found
+- Create page for 404 and add route in routes.js as below
+```
+
+```
