@@ -389,7 +389,33 @@ export default {
 ```
 
 ## 20) Page Not Found
-- Create page for 404 and add route in routes.js as below
+- Create page for 404 i.e. "PageNotFoundPage.vue" and add route in routes.js as below
+```
+const routes = [
+    {
+        name: 'PageNotFoundPage',
+        path: '/:pathMatch(.*)*',
+        component: PageNotFoundPage
+    },
+];
 ```
 
+## 21) Ref
+- use: GET or SET DOM's value 
 ```
+<input type="text" name="ref_name" id="ref_name" ref="ref_name">
+<button v-on:click="getRefVal();">Get Ref Value</button>
+
+<script>
+methods: {
+    getRefVal() {
+        this.$refs.ref_name.focus();
+        console.log(this.$refs.ref_name.value);
+        this.$refs.ref_name.style.backgroundColor = "gray";
+        this.$refs.ref_name.style.color = "yellow";
+    }
+}
+</script>
+```
+
+## 22) Form with Validation

@@ -111,6 +111,61 @@
 <Child2 :parentFunction2="parentFunction2" />
 
 <hr>
+<h2>Ref: Get OR Set DOM's Value</h2>
+<input type="text" name="ref_name" id="ref_name" ref="ref_name">
+<button v-on:click="getRefVal();">Get Ref Value</button>
+
+<hr>
+<h2>Form with Validation</h2>
+
+<form class="main-form">
+    <div class="form-block">
+        <label for="form_email">E-Mail</label>
+        <input type="text" name="form_email" id="form_email" v-model="form.form_email">
+    </div>
+    <div class="form-block">
+        <label for="form_password">Password</label>
+        <input type="text" name="form_password" id="form_password" v-model="form.form_password">
+    </div>
+    <div class="form-block">
+        <label for="form_country">Country: </label>
+        <select name="form_country" id="form_country" v-model="form.form_country">
+            <option value="">--</option>
+            <option value="India">India</option>
+            <option value="Israel">Israel</option>
+            <option value="Japan">Japan</option>
+        </select>
+    </div>
+    <div class="form-block">
+        <label>Gender: </label>
+        <input type="radio" name="form_gender" value="Female" v-model="form.form_gender"> Female
+        <input type="radio" name="form_gender" value="Male" v-model="form.form_gender"> Male
+    </div>
+    <div class="form-block">
+        <label>Technology: </label>
+        <input type="checkbox" name="form_technology_php" id="form_technology_php" value="PHP" v-model="form.form_technology"> PHP
+        <input type="checkbox" name="form_technology_java" id="form_technology_java" value="Java" v-model="form.form_technology"> Java
+        <input type="checkbox" name="form_technology_net" id="form_technology_net" value=".Net" v-model="form.form_technology"> .Net
+    </div>
+
+    <div class="form-block">
+        <button type="button" v-on:click="form_login()">Submit</button>
+    </div>
+
+    <div class="form-block">
+        Form Data: {{ form }}
+    </div>
+    <div class="form-block">
+        Form Error:
+        <ul>
+            <li v-for="item in form_error" :key="item">
+               {{ item }} not valid
+            </li>
+        </ul>
+    </div>
+</form>
+
+<hr>
 </template>
 
 <script>
@@ -131,6 +186,7 @@ export default {
             show: true,
             bgColor:true,
             childName: '',
+            form_error: [],
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
@@ -141,6 +197,13 @@ export default {
             tag2: '<h2>Tag 2</h2>',
             getValue: function (val = "") {
                 return val + " Test";
+            },
+            form: {
+                form_email: '',
+                form_password: '',
+                form_country: '',
+                form_gender: '',
+                form_technology: [],
             }
         };
     },
@@ -171,6 +234,24 @@ export default {
         },
         parentFunction2(childName) {
             this.childName = childName;
+        },
+        getRefVal() {
+            this.$refs.ref_name.focus();
+            console.log(this.$refs.ref_name.value);
+            this.$refs.ref_name.style.backgroundColor = "gray";
+            this.$refs.ref_name.style.color = "yellow";
+        },
+        form_login() {
+            this.form_error = [];
+            for(const item in this.form) {
+                if(this.form[item] === '' || this.form[item].length === 0) {
+                    this.form_error.push(item);
+                }
+            }
+
+            if(this.form_error.length === 0) {
+                alert("Form submitted successfully.");
+            }
         }
     },
     components: { ChildPage, UserPage, Child2 },
@@ -201,5 +282,17 @@ h2 {
 }
 .red {
     color: crimson;
+}
+.main-form {
+    border: 1px solid #333333;
+    padding: 10px;
+}
+.main-form .form-block {
+    padding: 10px;
+}
+.main-form .form-block label {
+    font-weight: 500;
+    width: 10%;
+    display: inline-block;
 }
 </style>
