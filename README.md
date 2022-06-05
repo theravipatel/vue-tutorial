@@ -501,3 +501,65 @@ export default {
 }
 </script>
 ```
+
+## 23) Form Modifiers
+```
+<input type="text" v-model.lazy.number="form_modifier_data">
+<p>Data value is:{{form_modifier_data}}</p>
+<p>Data type is:{{ typeof(form_modifier_data) }}</p>
+```
+
+## 24) Non-Props Data
+- Pass data to child without defining vars as props
+- Default it will apply to parent/root div if available otherwise it will not apply.
+- To apply it to particular div/element, add v-bind="$attrs" in that div/element 
+- use 'inheritAttrs: false' to avoid applying it on root div/element
+
+- Parent Page: HomePage.vue
+```
+<NonPropsPage prop_data="data1" non_prop_data="data2" />
+```
+
+- Child page: NonPropsPage.vue
+```
+
+<div>
+    <h1>Test 1</h1>
+    <h1>Test 2</h1>
+    <h1 v-bind="$attrs">Test 2</h1>
+</div>
+<script>
+export default {
+    name: 'NonPropsPage',
+    inheritAttrs: false,
+    props: {
+        prop_data: String
+    }
+}
+</script>
+```
+
+## 25) Computed Property
+- When there is more logic/opration in method, use computed property which is cache based on their reactive dependancies.
+```
+<div>
+    <h3>Normal template expression: It will calculate everytime</h3>
+    <p>{{ (dollar_value * rupee_value) - discount_value }}</p>
+    <p>{{ (dollar_value * rupee_value) - discount_value }}</p>
+</div>
+<div>
+    <h3>Computed expression: It is cache based</h3>
+    <p>{{ getDollarToRupee }}</p>
+    <p>{{ getDollarToRupee }}</p>
+</div>
+<script>
+export default {
+    name: 'HomePage',
+    computed: {
+        getDollarToRupee() {
+            return (this.dollar_value * this.rupee_value) - this.discount_value;
+        }
+    }
+}
+</script>
+```

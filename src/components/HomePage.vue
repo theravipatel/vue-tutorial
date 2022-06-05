@@ -165,6 +165,32 @@
     </div>
 </form>
 
+
+<hr>
+<h2>Form Modifiers</h2>
+<input type="text" v-model.lazy.number="form_modifier_data">
+<p>Data value is:{{form_modifier_data}}</p>
+<p>Data type is:{{ typeof(form_modifier_data) }}</p>
+
+<hr>
+<h2>Non Props Data</h2>
+<NonPropsPage prop_data="data1" non_prop_data="data2"></NonPropsPage>
+
+<hr>
+<h2>Computed Property</h2>
+<div>
+    <h3>Normal template expression: It will calculate everytime</h3>
+    <p>{{ (dollar_value * rupee_value) - discount_value }}</p>
+    <p>{{ (dollar_value * rupee_value) - discount_value }}</p>
+</div>
+<div>
+    <h3>Computed expression: It is cache based</h3>
+    <p>{{ getDollarToRupee }}</p>
+    <p>{{ getDollarToRupee }}</p>
+</div>
+
+<h3></h3>
+
 <hr>
 </template>
 
@@ -172,6 +198,8 @@
 import ChildPage from "./ChildPage.vue";
 import UserPage from "./UserPage.vue";
 import Child2 from "./Child2.vue";
+import NonPropsPage from "./NonPropsPage.vue";
+
 export default {
     name: "HomePage",
     data() {
@@ -187,6 +215,10 @@ export default {
             bgColor:true,
             childName: '',
             form_error: [],
+            form_modifier_data: '',
+            dollar_value: 100,
+            rupee_value: 75,
+            discount_value: 10,
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
@@ -254,13 +286,16 @@ export default {
             }
         }
     },
-    components: { ChildPage, UserPage, Child2 },
+    components: { ChildPage, UserPage, Child2, NonPropsPage },
     computed: {
         applyStyle() {
             return {
                 green: this.bgColor,
                 red: true,
             }
+        },
+        getDollarToRupee() {
+            return (this.dollar_value * this.rupee_value) - this.discount_value;
         }
     }
 }
