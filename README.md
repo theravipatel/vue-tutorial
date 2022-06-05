@@ -419,3 +419,85 @@ methods: {
 ```
 
 ## 22) Form with Validation
+```
+<form class="main-form">
+    <div class="form-block">
+        <label for="form_email">E-Mail</label>
+        <input type="text" name="form_email" id="form_email" v-model="form.form_email">
+    </div>
+    <div class="form-block">
+        <label for="form_password">Password</label>
+        <input type="text" name="form_password" id="form_password" v-model="form.form_password">
+    </div>
+    <div class="form-block">
+        <label for="form_country">Country: </label>
+        <select name="form_country" id="form_country" v-model="form.form_country">
+            <option value="">--</option>
+            <option value="India">India</option>
+            <option value="Israel">Israel</option>
+            <option value="Japan">Japan</option>
+        </select>
+    </div>
+    <div class="form-block">
+        <label>Gender: </label>
+        <input type="radio" name="form_gender" value="Female" v-model="form.form_gender"> Female
+        <input type="radio" name="form_gender" value="Male" v-model="form.form_gender"> Male
+    </div>
+    <div class="form-block">
+        <label>Technology: </label>
+        <input type="checkbox" name="form_technology_php" id="form_technology_php" value="PHP" v-model="form.form_technology"> PHP
+        <input type="checkbox" name="form_technology_java" id="form_technology_java" value="Java" v-model="form.form_technology"> Java
+        <input type="checkbox" name="form_technology_net" id="form_technology_net" value=".Net" v-model="form.form_technology"> .Net
+    </div>
+
+    <div class="form-block">
+        <button type="button" v-on:click="form_login()">Submit</button>
+    </div>
+
+    <div class="form-block">
+        Form Data: {{ form }}
+    </div>
+    <div class="form-block">
+        Form Error:
+        <ul>
+            <li v-for="item in form_error" :key="item">
+               {{ item }} not valid
+            </li>
+        </ul>
+    </div>
+</form>
+```
+- Define form fields
+```
+<script>
+export default {
+    name: "HomePage",
+    data() {
+        return {
+            form_error: [],
+            form: {
+                form_email: '',
+                form_password: '',
+                form_country: '',
+                form_gender: '',
+                form_technology: [],
+            }
+        };
+    },
+    methods: {
+        form_login() {
+            this.form_error = [];
+            for(const item in this.form) {
+                if(this.form[item] === '' || this.form[item].length === 0) {
+                    this.form_error.push(item);
+                }
+            }
+
+            if(this.form_error.length === 0) {
+                alert("Form submitted successfully.");
+            }
+        }
+    }
+}
+</script>
+```
