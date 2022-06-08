@@ -563,3 +563,27 @@ export default {
 }
 </script>
 ```
+
+## 26) Watchers 
+- Allows us to watch a component and perform specified actions when the value of the component changes
+```
+<p>{{ my_watcher }}</p>
+<button @click="my_watcher=my_watcher+1">+</button>
+<button @click="my_watcher=my_watcher-1">-</button>
+
+<script>
+export default {
+    name: 'HomePage',
+    data() {
+        return {
+            my_watcher: 0;
+        }
+    },
+    watch: {
+        my_watcher(new_val, old_val) {
+            alert("New Value=" + new_val + " - Old Val=" + old_val);
+        }
+    }
+}
+</script>
+```

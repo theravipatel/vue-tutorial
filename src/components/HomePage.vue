@@ -189,7 +189,13 @@
     <p>{{ getDollarToRupee }}</p>
 </div>
 
-<h3></h3>
+<hr>
+<h2>Watchers</h2>
+<div>
+    <p style="font-size: 30px;color: #0f0f0f;margin: 10px;">{{ my_watcher }}</p>
+    <button class="green" style="font-size:20px;margin: 10px;" @click="my_watcher=my_watcher+1">+</button>
+    <button class="green" style="font-size:20px;margin: 10px;" @click="my_watcher=my_watcher-1">-</button>
+</div>
 
 <hr>
 </template>
@@ -219,6 +225,7 @@ export default {
             dollar_value: 100,
             rupee_value: 75,
             discount_value: 10,
+            my_watcher:0,
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
@@ -296,6 +303,11 @@ export default {
         },
         getDollarToRupee() {
             return (this.dollar_value * this.rupee_value) - this.discount_value;
+        }
+    },
+    watch: {
+        my_watcher(new_val, old_val) {
+            alert("New Value=" + new_val + " - Old Val=" + old_val);
         }
     }
 }
