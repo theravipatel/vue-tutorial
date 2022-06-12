@@ -847,3 +847,69 @@ export default {
 }
 </script>
 ```
+
+## 35) To work with API, need to intall Axios package
+
+```
+command: npm install axios
+```
+
+## 36) Get API
+```
+<p v-for="item in user_api_list" :key="item">
+    {{ item.id }} --- <img :src="item.avatar" width="30" /> {{ item.first_name }} {{ item.last_name }}
+</p>
+
+<script>
+import axios from 'axios';
+
+export default {
+    name: 'HomePage',
+    data() {
+        return {
+            user_api_list: [],
+        }
+    },
+    mounted() {
+        let result = await axios.get("https://reqres.in/api/users");
+        console.warn("API response",result);
+        this.user_api_list = result.data.data;
+    }
+}
+</script>
+```
+
+## 37) Post API
+```
+<input type="text" name="api_email" v-model="api_email"> <br>
+<input type="text" name="api_password" v-model="api_password"> <br>
+<button v-on:click="user_login()">Submit API Data</button>
+
+<script>
+import axios from 'axios';
+
+export default {
+    name: 'HomePage',
+    data() {
+        return {
+            api_email: 'eve.holt@reqres.in',
+            api_password: 'cityslicka',
+        }
+    },
+    mothods: {
+        async user_login() {
+            let result = await axios.post("https://reqres.in/api/login", {
+                email: this.api_email,
+                password: this.api_password
+            });
+            console.warn("Post API response",result);
+            if(result.status==200) {
+                alert("Login Success. Token:"+ result.data.token);
+            } else {
+                alert("Login Fail. Error: "+result.statusText);
+            }
+        }
+    }
+}
+</script>
+```

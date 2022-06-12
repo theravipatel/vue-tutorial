@@ -256,6 +256,18 @@
 <button @click="showChildPage3=!showChildPage3">Toggle Page 3</button>
 
 <hr>
+<h2>Get API</h2>
+<p v-for="item in user_api_list" :key="item">
+    {{ item.id }} --- <img :src="item.avatar" width="30" /> {{ item.first_name }} {{ item.last_name }}
+</p>
+
+<hr>
+<h2>Post API</h2>
+<input type="text" name="api_email" v-model="api_email"> <br>
+<input type="text" name="api_password" v-model="api_password"> <br>
+<button v-on:click="user_login()">Submit API Data</button>
+
+<hr>
 </template>
 
 <script>
@@ -270,6 +282,8 @@ import Tab2Component from "./tab_component/Tab2Component.vue";
 import Tab3Component from "./tab_component/Tab3Component.vue";
 import TeleportFooterPage from "./TeleportFooterPage";
 import ChildPage3 from "./ChildPage3.vue";
+
+import axios from 'axios';
 
 export default {
     name: "HomePage",
@@ -295,6 +309,9 @@ export default {
             default_tab: 'Tab1Component',
             update_life_cycle_var: 0,
             showChildPage3: true,
+            user_api_list: [],
+            api_email: 'eve.holt@reqres.in',
+            api_password: 'cityslicka',
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
@@ -360,6 +377,18 @@ export default {
             if(this.form_error.length === 0) {
                 alert("Form submitted successfully.");
             }
+        },
+        async user_login() {
+            let result = await axios.post("https://reqres.in/api/login", {
+                email: this.api_email,
+                password: this.api_password
+            });
+            console.warn("Post API response",result);
+            if(result.status==200) {
+                alert("Login Success. Token:"+ result.data.token);
+            } else {
+                alert("Login Fail. Error: "+result.statusText);
+            }
         }
     },
     components: { ChildPage, UserPage, Child2, NonPropsPage, BasicSlotPage, NamedSlotPage, Tab1Component, Tab2Component, Tab3Component, TeleportFooterPage, ChildPage3 },
@@ -391,9 +420,13 @@ export default {
         //alert("beforeMount method called.");
         console.warn("beforeMount method called.",this.$el);
     },
-    mounted() {
+    async mounted() {
         //alert("mounted method called.");
         console.warn("mounted method called.",this.$el);
+
+        let result = await axios.get("https://reqres.in/api/users");
+        console.warn("API response",result);
+        this.user_api_list = result.data.data;
     },
     beforeUpdate() {
         console.warn("beforeUpdate method called.",this.$refs['text_update_life_cycle_var'].textContent);
