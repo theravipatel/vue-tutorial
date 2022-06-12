@@ -587,3 +587,93 @@ export default {
 }
 </script>
 ```
+
+## 27) Basic Slot
+- Pass a template fragment to a child component, and let the child component render the fragment within its own template.
+
+- In HomePage.vue
+```
+<BasicSlotPage></BasicSlotPage>
+<BasicSlotPage><h3>This is parent h3 tag pass to child using slot</h3></BasicSlotPage>
+<BasicSlotPage>{{ slot_parent_msg }}</BasicSlotPage>
+
+<script>
+import BasicSlotPage from "./BasicSlotPage.vue";
+export default {
+    name: 'HomePage',
+    components: { BasicSlotPage },
+    data() {
+        return {
+            slot_parent_msg: 'test';
+        }
+    }
+}
+</script>
+``` 
+
+In BasicSlotPage.vue : "<h2>Slot Child Component Default Content</h2>" is default content when data is not pass it will render.
+```
+<template>
+<slot><h2>Slot Child Component Default Content</h2></slot> 
+</template>
+
+<script>
+export default {
+    name: 'BasicSlotPage'
+}
+</script>
+```
+
+## 28) 
+- In HomePage.vue
+```
+<NamedSlotPage>
+    <template v-slot:header>
+        <h3>
+            Header
+        </h3>
+    </template>
+    <template v-slot:content>
+        <p>
+            Content
+        </p>
+    </template>
+    <template v-slot:footer>
+        <h3>
+            Footer
+        </h3>
+    </template>
+</NamedSlotPage>
+
+
+<script>
+import NamedSlotPage from "./NamedSlotPage.vue";
+export default {
+    name: 'HomePage',
+    components: { NamedSlotPage },
+}
+</script>
+```
+
+- In NamedSlotPage.vue 
+```
+<template>
+    <div class="main-block">
+        <header>
+            <slot name="header"></slot>
+        </header>
+        <content>
+            <slot name="content"></slot>
+        </content>
+        <footer>
+            <slot name="footer"></slot>
+        </footer>
+    </div>
+</template>
+
+<script>
+export default {
+    name: 'NamedSlotPage'
+}
+</script>
+```

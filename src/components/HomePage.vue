@@ -198,6 +198,32 @@
 </div>
 
 <hr>
+<h2>Basic Slot</h2>
+<BasicSlotPage></BasicSlotPage>
+<BasicSlotPage><h3>This is parent h3 tag pass to child using slot</h3></BasicSlotPage>
+<BasicSlotPage>{{ slot_parent_msg }}</BasicSlotPage>
+
+<hr>
+<h2>Multiple slot with Name Slots</h2>
+<NamedSlotPage>
+    <template v-slot:header>
+        <h3>
+            Header
+        </h3>
+    </template>
+    <template v-slot:content>
+        <p>
+            Content
+        </p>
+    </template>
+    <template v-slot:footer>
+        <h3>
+            Footer
+        </h3>
+    </template>
+</NamedSlotPage>
+
+<hr>
 </template>
 
 <script>
@@ -205,6 +231,8 @@ import ChildPage from "./ChildPage.vue";
 import UserPage from "./UserPage.vue";
 import Child2 from "./Child2.vue";
 import NonPropsPage from "./NonPropsPage.vue";
+import BasicSlotPage from "./BasicSlotPage.vue";
+import NamedSlotPage from "./NamedSlotPage.vue";
 
 export default {
     name: "HomePage",
@@ -226,6 +254,7 @@ export default {
             rupee_value: 75,
             discount_value: 10,
             my_watcher:0,
+            slot_parent_msg: 'slot_test',
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
@@ -293,7 +322,7 @@ export default {
             }
         }
     },
-    components: { ChildPage, UserPage, Child2, NonPropsPage },
+    components: { ChildPage, UserPage, Child2, NonPropsPage, BasicSlotPage, NamedSlotPage },
     computed: {
         applyStyle() {
             return {
