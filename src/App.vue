@@ -51,4 +51,7 @@ hr{
     color: #ffffff;
     transition: ease-in-out .2s;
 }
+#teleport_footer {
+    text-align: right;
+}
 </style>

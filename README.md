@@ -624,7 +624,7 @@ export default {
 </script>
 ```
 
-## 28) 
+## 28) Multiple Named Slots
 - In HomePage.vue
 ```
 <NamedSlotPage>
@@ -674,6 +674,69 @@ export default {
 <script>
 export default {
     name: 'NamedSlotPage'
+}
+</script>
+```
+
+## 29) Dynamic Component
+- Load component dynamically. It will not load all component in the page. switching between multiple components with <component :is="default_tab" >, a component will be unmounted when it is switched away from. We can force the inactive components to stay "alive" with the built-in <KeepAlive> component
+
+- In HomePage.vue
+```
+<button @click="default_tab='Tab1Component'">Tab 1</button>
+<button @click="default_tab='Tab2Component'">Tab 2</button>
+<button @click="default_tab='Tab3Component'">Tab 3</button>
+
+<component :is="default_tab" />
+
+<script>
+import Tab1Component from "./tab_component/Tab1Component.vue";
+import Tab2Component from "./tab_component/Tab2Component.vue";
+import Tab3Component from "./tab_component/Tab3Component.vue";
+export default {
+    name: 'HomePage',
+    components: { BasicSlotPage },
+    data() {
+        return {
+            default_tab: 'Tab1Component',
+        }
+    }
+}
+</script>
+```
+
+## 30) Teleport component
+- <Teleport> is a built-in component that allows us to "teleport" a part of a component's template into a DOM node that exists outside the DOM hierarchy of that component.
+
+- In index.html - outside id='app' div
+```
+<div id="teleport_footer"></div>
+```
+
+- In HomePage.vue 
+```
+<Teleport to="#teleport_footer">
+    <TeleportFooterPage></TeleportFooterPage>
+</Teleport>
+
+<script>
+import TeleportFooterPage from "./TeleportFooterPage";
+export default {
+    name: 'HomePage',
+    components: { TeleportFooterPage },
+}
+</script>
+```
+
+- In TeleportFooterPage.vue 
+```
+<template>
+<h3> &copy; Copy right @Ravi Patel</h3>  
+</template>
+
+<script>
+export default {
+    name: 'TeleportFooterPage',
 }
 </script>
 ```

@@ -204,7 +204,7 @@
 <BasicSlotPage>{{ slot_parent_msg }}</BasicSlotPage>
 
 <hr>
-<h2>Multiple slot with Name Slots</h2>
+<h2>Multiple Named Slots</h2>
 <NamedSlotPage>
     <template v-slot:header>
         <h3>
@@ -224,6 +224,19 @@
 </NamedSlotPage>
 
 <hr>
+<h2>Dynamic Component</h2>
+<button @click="default_tab='Tab1Component'">Tab 1</button>
+<button @click="default_tab='Tab2Component'">Tab 2</button>
+<button @click="default_tab='Tab3Component'">Tab 3</button>
+
+<component :is="default_tab" />
+
+<hr>
+<Teleport to="#teleport_footer">
+    <TeleportFooterPage></TeleportFooterPage>
+</Teleport>
+
+<hr>
 </template>
 
 <script>
@@ -233,6 +246,10 @@ import Child2 from "./Child2.vue";
 import NonPropsPage from "./NonPropsPage.vue";
 import BasicSlotPage from "./BasicSlotPage.vue";
 import NamedSlotPage from "./NamedSlotPage.vue";
+import Tab1Component from "./tab_component/Tab1Component.vue";
+import Tab2Component from "./tab_component/Tab2Component.vue";
+import Tab3Component from "./tab_component/Tab3Component.vue";
+import TeleportFooterPage from "./TeleportFooterPage";
 
 export default {
     name: "HomePage",
@@ -255,6 +272,7 @@ export default {
             discount_value: 10,
             my_watcher:0,
             slot_parent_msg: 'slot_test',
+            default_tab: 'Tab1Component',
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
@@ -322,7 +340,7 @@ export default {
             }
         }
     },
-    components: { ChildPage, UserPage, Child2, NonPropsPage, BasicSlotPage, NamedSlotPage },
+    components: { ChildPage, UserPage, Child2, NonPropsPage, BasicSlotPage, NamedSlotPage, Tab1Component, Tab2Component, Tab3Component, TeleportFooterPage },
     computed: {
         applyStyle() {
             return {
