@@ -740,3 +740,110 @@ export default {
 }
 </script>
 ```
+
+## 31) 'beforeCreate' and 'created' life cycle method
+- beforeCreate: Called when the instance is initialized. Called immediately when the instance is initialized, after props resolution, before processing other options such as data() or computed.
+- created: Called after the instance has finished processing all state-related options. When this hooks is called, the following have been set up: reactive data, computed properties, methods, and watchers. However, the mounting phase has not been started.
+
+```
+<script>
+export default {
+    name: 'HomePage',
+    beforeCreate() {
+        alert("beforeCreate method called.");
+        console.log("beforeCreate method called.");
+    },
+    created() {
+        alert("created method called.");
+        console.log("created method called.");
+    }
+}
+</script>
+```
+
+
+## 32) 'beforeMount' and 'mounted' life cycle method
+- beforeMount: Called right before the component is to be mounted.When this hook is called, the component has finished setting up its reactive state, but no DOM nodes have been created yet. It is about to execute its DOM render effect for the first time.
+- mounted: Called after the component has been mounted. 
+
+```
+<script>
+export default {
+    name: 'HomePage',
+    beforeMount() {
+        alert("beforeMount method called.");
+        console.log("beforeMount method called.");
+    },
+    mounted() {
+        alert("mounted method called.");
+        console.log("mounted method called.");
+    }
+}
+</script>
+```
+
+## 33) 'beforeUpdate' and 'updated' life cycle method
+- beforeUpdate: Called right before the component is about to update its DOM tree due to a reactive state change.This hook can be used to access the DOM state before Vue updates the DOM. It is also safe to modify component state inside this hook.
+- updated: Called after the component has updated its DOM tree due to a reactive state change. This hook is called after any DOM update of the component, which can be caused by different state changes.
+
+```
+<p ref="text_update_life_cycle_var">{{ update_life_cycle_var }}</p>
+<button @click="update_life_cycle_var=update_life_cycle_var+1">+</button>
+
+<script>
+export default {
+    name: 'HomePage',
+    data() {
+        return {
+            update_life_cycle_var: 0
+        }
+    },
+    beforeUpdate() {
+        console.warn("beforeUpdate method called.",this.$refs['text_update_life_cycle_var'].textContent);
+    },
+    updated() {
+        console.warn("updated method called.",this.$refs['text_update_life_cycle_var'].textContent);
+    }
+}
+</script>
+```
+
+## 34) 'beforeUnmount' and 'unmounted' life cycle method
+- beforeUnmount: Called right before a component instance is to be unmounted. When this hook is called, the component instance is still fully functional.
+- unmounted: Called after the component has been unmounted. All of its associated reactive effects (render effect and computed / watchers created during setup()) have been stopped.
+
+- In HomePage.vue 
+```
+<ChildPage3 v-if="showChildPage3"></ChildPage3>
+<button @click="showChildPage3=!showChildPage3">Toggle Page 3</button>
+
+<script>
+export default {
+    name: 'HomePage',
+    data() {
+        return {
+            showChildPage3: true
+        }
+    }
+}
+</script>
+```
+
+- In ChildPage3.vue 
+```
+<template>
+<h2 ref="page_title">Child Page 3</h2>
+</template>
+
+<script>
+export default {
+    name: 'ChildPage3',
+    beforeUnmount() {
+        console.warn("beforeUnmount method called.",this.$refs['page_title']);
+    },
+    mounted() {
+        console.warn("mounted method called.",this.$refs['page_title']);
+    }
+}
+</script>
+```

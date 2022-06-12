@@ -237,6 +237,25 @@
 </Teleport>
 
 <hr>
+<h2>'beforeCreate' and 'created' life cycle method</h2>
+<p>Check console or uncomment alert in beforeCreate() and created() methods</p>
+
+<hr>
+<h2>'beforeMount' and 'mounted' life cycle method</h2>
+<p>Check console in beforeMount() and mounted() methods</p>
+
+<hr>
+<h2>'beforeUpdate' and 'updated' life cycle method</h2>
+<p style="font-size: 30px;color: #0f0f0f;margin: 10px;" ref="text_update_life_cycle_var">{{ update_life_cycle_var }}</p>
+<button class="green" style="font-size:20px;margin: 10px;" @click="update_life_cycle_var=update_life_cycle_var+1">+</button>
+
+<hr>
+<h2>'beforeUnmount' and 'unmounted' life cycle method</h2>
+<p>Check console in beforeUnmount() and unmounted() methods</p>
+<ChildPage3 v-if="showChildPage3"></ChildPage3>
+<button @click="showChildPage3=!showChildPage3">Toggle Page 3</button>
+
+<hr>
 </template>
 
 <script>
@@ -250,6 +269,7 @@ import Tab1Component from "./tab_component/Tab1Component.vue";
 import Tab2Component from "./tab_component/Tab2Component.vue";
 import Tab3Component from "./tab_component/Tab3Component.vue";
 import TeleportFooterPage from "./TeleportFooterPage";
+import ChildPage3 from "./ChildPage3.vue";
 
 export default {
     name: "HomePage",
@@ -273,6 +293,8 @@ export default {
             my_watcher:0,
             slot_parent_msg: 'slot_test',
             default_tab: 'Tab1Component',
+            update_life_cycle_var: 0,
+            showChildPage3: true,
             fruit: ["Apple", "Banana", "Mango", "Orange"],
             users: [
                 { name: "User 1", email: "user1@test.com" },
@@ -340,7 +362,7 @@ export default {
             }
         }
     },
-    components: { ChildPage, UserPage, Child2, NonPropsPage, BasicSlotPage, NamedSlotPage, Tab1Component, Tab2Component, Tab3Component, TeleportFooterPage },
+    components: { ChildPage, UserPage, Child2, NonPropsPage, BasicSlotPage, NamedSlotPage, Tab1Component, Tab2Component, Tab3Component, TeleportFooterPage, ChildPage3 },
     computed: {
         applyStyle() {
             return {
@@ -356,6 +378,28 @@ export default {
         my_watcher(new_val, old_val) {
             alert("New Value=" + new_val + " - Old Val=" + old_val);
         }
+    },
+    beforeCreate() {
+        //alert("beforeCreate method called.");
+        console.warn("beforeCreate method called.");
+    },
+    created() {
+        //alert("created method called.");
+        console.warn("created method called.");
+    },
+    beforeMount() {
+        //alert("beforeMount method called.");
+        console.warn("beforeMount method called.",this.$el);
+    },
+    mounted() {
+        //alert("mounted method called.");
+        console.warn("mounted method called.",this.$el);
+    },
+    beforeUpdate() {
+        console.warn("beforeUpdate method called.",this.$refs['text_update_life_cycle_var'].textContent);
+    },
+    updated() {
+        console.warn("updated method called.",this.$refs['text_update_life_cycle_var'].textContent);
     }
 }
 </script>
