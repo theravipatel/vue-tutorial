@@ -20,7 +20,8 @@
 
 ## 5) Property Define
 ```
-- export default {
+<script>
+export default {
     name: "HomeComponent",
     data() {
         return {
@@ -32,13 +33,18 @@
         }
     }
 }
+</script>
 ```
 
 ## 6) Methods
 ```
-- <h1>{{ getData("Hello") }}</h1>
-- <h1>{{ getData2().name }}</h1>
-- export default {
+<h1>{{ getData("Hello") }}</h1>
+<h1>{{ getData2().name }}</h1>
+```
+
+```
+<script>
+export default {
     name: "HomeComponent",
     methods: {
         getData(val) {
@@ -49,25 +55,30 @@
         }
     }
 }
+</script>
 ```
 
 ## 7) Events
 ```
-- <button v-on:click="getClickData('Single Clicked');">Single Click</button> 
-- <button v-on:dblclick="getClickData('Double Clicked');">Double Click</button> 
+<button v-on:click="getClickData('Single Clicked');">Single Click</button> 
+<button v-on:dblclick="getClickData('Double Clicked');">Double Click</button> 
 ```
 
 ## 8) Two Way Binding
 ```
-- <input type="text" v-model="bind_val"> - {{ bind_val }}
+<input type="text" v-model="bind_val"> - {{ bind_val }}
 ```
 
 ## 9) Get input value
 ```
-- <input type="text" v-model="text1" placeholder="Text 1"><br><br>
-- <input type="text" v-model="text2" placeholder="Text 2"><br><br>
-- <button v-on:click="getInputValue()">Get Value</button>
-- export default {
+<input type="text" v-model="text1" placeholder="Text 1"><br><br>
+<input type="text" v-model="text2" placeholder="Text 2"><br><br>
+<button v-on:click="getInputValue()">Get Value</button>
+```
+
+```
+<script> 
+export default {
     name: "HomeComponent",
     data() {
         return {
@@ -81,6 +92,7 @@
         }
     }
   }
+</script>
 ```
 
 ## 10) Get Checkbox & Radio Button Value
@@ -110,9 +122,10 @@
     <h4>Selected Technology: {{ technology }}</h4>
     <h4>I am a: {{ profession }}</h4>
 </div>
+```
 
-...
-
+```
+<script>
 export default {    
     name: "HomeComponent",
     data() {
@@ -122,6 +135,7 @@ export default {
         }
     },
 }
+</script>
 ```
 
 ## 11) if else conditions
@@ -129,9 +143,10 @@ export default {
 <h3 v-if="show">If Block</h3>
 <h3 v-else>Else Block</h3>
 <button v-on:click="show=!show">Toggle Show</button>
+```
 
-...
-
+```
+<script>
 export default {    
     name: "HomeComponent",
     data() {
@@ -140,6 +155,7 @@ export default {
         }
     },
 }
+</script>
 ```
 
 ## 12) For Loop and List
@@ -158,8 +174,10 @@ export default {
         </ol>
     </li>
 </ul>
-...
+```
 
+```
+<script>
 export default {    
     name: "HomeComponent",
     data() {
@@ -173,15 +191,17 @@ export default {
         }
     },
 }
+</script>
 ```
 
 ## 13) Pass Data Parent to Child Component
 - Patent Component:
 ```
 <ChildPage title="Test String" :fruit="fruit" :parentFunction="parentFunction" />
+```
 
-...
-
+```
+<script>
 export default {    
     name: "HomeComponent",
     data() {
@@ -195,6 +215,7 @@ export default {
         }
     }
 }
+</script>
 ```
 
 - Child Component:
@@ -202,9 +223,10 @@ export default {
 <h3>Passed Static String: {{ title }}</h3>    
 <h3>Passed Object: {{ fruit }}</h3> 
 <button v-on:click="parentFunction()">Call Parent Function</button>   
+```
 
-...
-
+```
+<script>
 export default {
     name: 'ChildPage',
     props: {
@@ -213,6 +235,7 @@ export default {
         parentFunction: Function
     }
 }
+</>
 ```
 
 ## 14) Reuse Component
@@ -228,9 +251,10 @@ export default {
 ## 15) HTML Binding
 ```
 <div v-html="tag1 + tag2"></div>
+```
 
-...
-
+```
+<script>
 export default {    
     name: "HomeComponent",
     data() {
@@ -240,7 +264,7 @@ export default {
         }
     },
 }
-
+</>
 ```
 
 ## 16) CSS Class Binding
@@ -248,9 +272,10 @@ export default {
 <h3 class="otherClass1" :class="{ green:bgColor, yellow:true }">Ravi Patel</h3>
 <h3 class="otherClass2" :class="applyStyle">Ravi Patel</h3>
 <button v-on:click="bgColor=!bgColor">Toggle BG</button>
+```
 
-...
-
+```
+<script>
 export default {
     name: "HomePage",
     data() {
@@ -267,7 +292,7 @@ export default {
         }
     }
 }
-
+</>
 ```
 
 ## 17) Send data from child to parent data component
@@ -275,9 +300,10 @@ export default {
 ```
 <h3>Name : {{ childName }}</h3>
 <Child2 :parentFunction2="parentFunction2" />
+```
 
-...
-
+```
+<script>
 export default {
     name: 'ChildPage',
     data() {
@@ -291,7 +317,7 @@ export default {
         }
     }
 }
-
+</script>
 ```
 
 - Child Component:
@@ -385,7 +411,7 @@ export default {
         this.profile_name = route.params.name;
     },
 }
-</script>
+</>
 ```
 
 ## 20) Page Not Found
@@ -405,7 +431,9 @@ const routes = [
 ```
 <input type="text" name="ref_name" id="ref_name" ref="ref_name">
 <button v-on:click="getRefVal();">Get Ref Value</button>
+```
 
+```
 <script>
 methods: {
     getRefVal() {
@@ -522,12 +550,14 @@ export default {
 
 - Child page: NonPropsPage.vue
 ```
-
 <div>
     <h1>Test 1</h1>
     <h1>Test 2</h1>
     <h1 v-bind="$attrs">Test 2</h1>
 </div>
+```
+
+```
 <script>
 export default {
     name: 'NonPropsPage',
@@ -552,6 +582,9 @@ export default {
     <p>{{ getDollarToRupee }}</p>
     <p>{{ getDollarToRupee }}</p>
 </div>
+```
+
+```
 <script>
 export default {
     name: 'HomePage',
@@ -570,7 +603,9 @@ export default {
 <p>{{ my_watcher }}</p>
 <button @click="my_watcher=my_watcher+1">+</button>
 <button @click="my_watcher=my_watcher-1">-</button>
+```
 
+```
 <script>
 export default {
     name: 'HomePage',
@@ -596,7 +631,9 @@ export default {
 <BasicSlotPage></BasicSlotPage>
 <BasicSlotPage><h3>This is parent h3 tag pass to child using slot</h3></BasicSlotPage>
 <BasicSlotPage>{{ slot_parent_msg }}</BasicSlotPage>
+```
 
+```
 <script>
 import BasicSlotPage from "./BasicSlotPage.vue";
 export default {
@@ -616,7 +653,9 @@ In BasicSlotPage.vue : "<h2>Slot Child Component Default Content</h2>" is defaul
 <template>
 <slot><h2>Slot Child Component Default Content</h2></slot> 
 </template>
+```
 
+```
 <script>
 export default {
     name: 'BasicSlotPage'
@@ -644,8 +683,9 @@ export default {
         </h3>
     </template>
 </NamedSlotPage>
+```
 
-
+```
 <script>
 import NamedSlotPage from "./NamedSlotPage.vue";
 export default {
@@ -670,7 +710,9 @@ export default {
         </footer>
     </div>
 </template>
+```
 
+```
 <script>
 export default {
     name: 'NamedSlotPage'
@@ -688,7 +730,9 @@ export default {
 <button @click="default_tab='Tab3Component'">Tab 3</button>
 
 <component :is="default_tab" />
+```
 
+```
 <script>
 import Tab1Component from "./tab_component/Tab1Component.vue";
 import Tab2Component from "./tab_component/Tab2Component.vue";
@@ -718,7 +762,9 @@ export default {
 <Teleport to="#teleport_footer">
     <TeleportFooterPage></TeleportFooterPage>
 </Teleport>
+```
 
+```
 <script>
 import TeleportFooterPage from "./TeleportFooterPage";
 export default {
@@ -733,7 +779,9 @@ export default {
 <template>
 <h3> &copy; Copy right @Ravi Patel</h3>  
 </template>
+```
 
+```
 <script>
 export default {
     name: 'TeleportFooterPage',
@@ -789,7 +837,9 @@ export default {
 ```
 <p ref="text_update_life_cycle_var">{{ update_life_cycle_var }}</p>
 <button @click="update_life_cycle_var=update_life_cycle_var+1">+</button>
+```
 
+```
 <script>
 export default {
     name: 'HomePage',
@@ -816,7 +866,9 @@ export default {
 ```
 <ChildPage3 v-if="showChildPage3"></ChildPage3>
 <button @click="showChildPage3=!showChildPage3">Toggle Page 3</button>
+```
 
+```
 <script>
 export default {
     name: 'HomePage',
@@ -834,7 +886,9 @@ export default {
 <template>
 <h2 ref="page_title">Child Page 3</h2>
 </template>
+```
 
+```
 <script>
 export default {
     name: 'ChildPage3',
@@ -859,7 +913,9 @@ command: npm install axios
 <p v-for="item in user_api_list" :key="item">
     {{ item.id }} --- <img :src="item.avatar" width="30" /> {{ item.first_name }} {{ item.last_name }}
 </p>
+```
 
+```
 <script>
 import axios from 'axios';
 
@@ -884,7 +940,9 @@ export default {
 <input type="text" name="api_email" v-model="api_email"> <br>
 <input type="text" name="api_password" v-model="api_password"> <br>
 <button v-on:click="user_login()">Submit API Data</button>
+```
 
+```
 <script>
 import axios from 'axios';
 
